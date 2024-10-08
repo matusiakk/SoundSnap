@@ -28,8 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -62,8 +62,10 @@ private fun GameScreen(
 
     with(state) {
         val fredokaFontFamily = FontFamily(Font(R.font.fredoka))
+
         val mediaPlayer =
-            remember(sounds[soundIndex]) { MediaPlayer.create(context, sounds[soundIndex]) }
+            remember(sound) { MediaPlayer.create(context, sound) }
+
         var timeLeft by remember {
             mutableIntStateOf(60)
         }
@@ -79,6 +81,10 @@ private fun GameScreen(
             modifier = Modifier.fillMaxSize(),
             color = DarkGray
         ) {
+            Image(
+                painter = painterResource(R.drawable.backbround3),
+                contentDescription = "background",
+                modifier = Modifier.alpha(0.8f))
             Column {
                 Row(
                     modifier = Modifier
@@ -103,7 +109,7 @@ private fun GameScreen(
                     )
                     Box(
                         modifier = Modifier
-                            .size(48.dp),
+                            .size(56.dp),
                         contentAlignment = Alignment.Center
                     ) {
 
@@ -113,10 +119,10 @@ private fun GameScreen(
                         )
                         Text(
                             text = score.toString(),
-                            fontSize = 24.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = fredokaFontFamily,
-                            color = Color.Blue
+                            color = DarkGray
                         )
                     }
                 }
@@ -153,7 +159,7 @@ private fun GameScreen(
                                 )
                         ) {
                             Image(
-                                painter = painterResource(images[firstImageIndex]),
+                                painter = painterResource(firstImage),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
@@ -168,14 +174,14 @@ private fun GameScreen(
                                         onIntent(
                                             GameIntent.OnImageClick(
                                                 secondImageIndex
-                                            )
+                                             )
                                         )
                                     },
                                     enabled = isClickable
                                 )
                         ) {
                             Image(
-                                painter = painterResource(images[secondImageIndex]),
+                                painter = painterResource(secondImage),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
@@ -184,7 +190,7 @@ private fun GameScreen(
                     }
                 }
                 if (isPlayingSound) mediaPlayer.start()
-                else mediaPlayer.stop()
+                else mediaPlayer.pause()
             }
             if (showMessage) {
                 Box(

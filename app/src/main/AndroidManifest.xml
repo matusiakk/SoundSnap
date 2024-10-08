@@ -18,8 +18,7 @@
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:label="@string/app_name"
-                android:theme="@style/Theme.SoundSnap">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
                 <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

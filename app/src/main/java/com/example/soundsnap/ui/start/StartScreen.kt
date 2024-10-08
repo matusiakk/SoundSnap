@@ -2,18 +2,20 @@ package com.example.soundsnap.ui.start
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,18 +28,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.soundsnap.R
+import com.example.soundsnap.ui.game.Categories
 import com.example.soundsnap.ui.theme.DarkGray
-import com.example.soundsnap.ui.theme.LightBlue
 import com.example.soundsnap.ui.theme.SoundSnapTheme
 
 @Composable
 fun StartScreen(viewModel: StartViewModel = hiltViewModel()) {
     StartScreen(viewModel::onIntent)
-
 }
 
 @Composable
-private fun StartScreen(onIntent: (StartIntent) -> Unit) {
+private fun StartScreen(
+    onIntent: (StartIntent) -> Unit
+) {
     val fredokaFontFamily = FontFamily(Font(R.font.fredoka))
 
     Surface(
@@ -46,42 +49,59 @@ private fun StartScreen(onIntent: (StartIntent) -> Unit) {
     ) {
         Image(
             painter = painterResource(R.drawable.backbround),
-            contentDescription = "background"
+            contentDescription = "background",
+            modifier = Modifier.alpha(0.8f)
         )
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom) {
-                Text(
-                    text = stringResource(R.string.descriptions),
-                    fontSize = 24.sp,
-                    color = Color.White,
-                    fontFamily = fredokaFontFamily,
-                    modifier = Modifier.padding(
-                        horizontal = 120.dp
-                    ),
-                    textAlign = TextAlign.Center
-                )
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 40.dp,
-                    horizontal = 144.dp
-                ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = LightBlue,
-                    contentColor = Color.Black
-                ),
-                onClick = { onIntent(StartIntent.OnGameClick) }) {
-                Text(
-                    text = stringResource(R.string.start),
-                    fontSize = 24.sp,
-                    fontFamily = fredokaFontFamily,
-                    fontWeight = FontWeight.Bold
+        Column(modifier = Modifier.padding(start = 120.dp)) {
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .size(80.dp)
+                    .align(Alignment.End)
+                    .padding(16.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.settings),
+                    contentDescription = "settings"
                 )
             }
+            Text(
+                text = stringResource(R.string.descriptions),
+                fontSize = 24.sp,
+                color = Color.White,
+                fontFamily = fredokaFontFamily,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(
+                    vertical = 8.dp
+                ),
+                textAlign = TextAlign.Center
+            )
+            Row {
+                Categories.values().forEach { category ->
+                    IconButton(
+                        onClick = { onIntent(StartIntent.OnGameClick(category))},
+                        modifier = Modifier
+                            .size(160.dp)
+                            .padding(8.dp)
+                            .border(width = 2.dp, color = Color.Black, shape = CircleShape)
+                    ) {
+                        val categoryImage = when (category) {
+                            Categories.Instruments -> R.drawable.instruments
+                            Categories.Animals -> R.drawable.animals
+                            Categories.Vehicles -> R.drawable.vehicles
+                        }
+                        Image(
+                            painter = painterResource(categoryImage),
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
         }
-
     }
 }
+
+
 
 @Preview(
     showBackground = true,

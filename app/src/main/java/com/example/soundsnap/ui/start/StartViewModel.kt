@@ -9,11 +9,11 @@ class StartViewModel : ViewModel() {
 
     fun onIntent(intent: StartIntent) {
         when (intent) {
-            is StartIntent.OnGameClick -> onGameClick()
+            is StartIntent.OnGameClick -> onGameClick(intent.category.toString())
         }
     }
 
-    private fun onGameClick() {
-        Navigator.sendEvent(NavEvent.NavigateTo(Screen.GameScreen.route))
+    private fun onGameClick(category: String) {
+        Navigator.sendEvent(NavEvent.NavigateTo(Screen.GameScreen.withArgs(category)))
     }
 }

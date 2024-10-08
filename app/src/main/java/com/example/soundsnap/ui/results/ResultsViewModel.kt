@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 @HiltViewModel
 class ResultsViewModel @Inject constructor(
@@ -30,10 +31,15 @@ class ResultsViewModel @Inject constructor(
     fun onIntent(intent: ResultsIntent) {
         when (intent) {
             is ResultsIntent.OnAgainClick -> onAgainClick()
+            is ResultsIntent.OnEndClick -> onEndClick()
         }
     }
 
+    private fun onEndClick() {
+        exitProcess(0)
+    }
+
     private fun onAgainClick() {
-        Navigator.sendEvent(NavEvent.NavigateTo(Screen.GameScreen.route))
+        Navigator.sendEvent(NavEvent.NavigateTo(Screen.StartScreen.route))
     }
 }

@@ -1,5 +1,7 @@
 package com.example.soundsnap.ui.start
 
+import com.example.soundsnap.ui.game.Categories
+
 sealed class StartIntent {
-    object OnGameClick : StartIntent()
+    class OnGameClick(var category: Categories) : StartIntent()
 }

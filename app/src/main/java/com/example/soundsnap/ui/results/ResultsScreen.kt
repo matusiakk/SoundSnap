@@ -5,8 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.soundsnap.R
 import com.example.soundsnap.ui.theme.DarkGray
 import com.example.soundsnap.ui.theme.LightBlue
+import com.example.soundsnap.ui.theme.Red
 import com.example.soundsnap.ui.theme.SoundSnapTheme
 
 @Composable
@@ -52,14 +54,15 @@ private fun ResultsScreen(
     ) {
         Image(
             painter = painterResource(R.drawable.backbround2),
-            contentDescription = "background"
+            contentDescription = "background",
+            modifier = Modifier.alpha(0.8f)
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Center
         ) {
             Box(
-                modifier = Modifier.size(184.dp),
+                modifier = Modifier.size(160.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -68,32 +71,41 @@ private fun ResultsScreen(
                 )
                 Text(
                     text = state.score.toString(),
-                    fontSize = 80.sp,
+                    fontSize = 48.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = fredokaFontFamily,
                     color = DarkGray
                 )
             }
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = 24.dp,
-                    bottom = 40.dp,
-                    start = 144.dp,
-                    end = 144.dp
-                ),
+            Row {
+
+                Button(
+                    onClick = { onIntent(ResultsIntent.OnAgainClick) },
+                    modifier = Modifier.padding(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = LightBlue,
+                        contentColor = Color.Black
+                    )) {
+                    Text(
+                        text = stringResource(R.string.again),
+                        fontSize = 24.sp,
+                        fontFamily = fredokaFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Button(onClick = { /*TODO*/ },
+                    modifier = Modifier.padding(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = LightBlue,
+                    containerColor = Red,
                     contentColor = Color.Black
-                ),
-                onClick = { onIntent(ResultsIntent.OnAgainClick) }) {
-                Text(
-                    text = stringResource(R.string.again),
+                )) {
+                    Text(
+                        text = stringResource(R.string.end),
                     fontSize = 24.sp,
                     fontFamily = fredokaFontFamily,
                     fontWeight = FontWeight.Bold
-                )
-
+                    )
+                }
             }
         }
     }
@@ -108,8 +120,9 @@ private fun ResultsScreen(
 )
 @Composable
 fun ResultsScreenPreview() {
+val state = ResultsState(score = 8)
     SoundSnapTheme {
-        ResultsScreen()
+        ResultsScreen(state){}
     }
 
 }

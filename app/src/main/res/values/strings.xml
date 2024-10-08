@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SoundSnap</string>
     <string name="again">Jeszcze raz!</string>
-    <string name="descriptions">Kliknij instrument który słyszysz. Odgadnij jak najwięcej dźwięków nim skończy się czas!</string>
+    <string name="descriptions">Kategorie</string>
     <string name="start">Start</string>
+    <string name="end">Koniec</string>
 </resources>

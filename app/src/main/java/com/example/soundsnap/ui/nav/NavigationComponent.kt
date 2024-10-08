@@ -25,7 +25,7 @@ fun NavigationComponent(navController: NavHostController) {
         navController = navController,
         startDestination = Screen.StartScreen.route
     ) {
-        composable(route = Screen.GameScreen.route) {
+        composable(route = Screen.GameScreen.route + "/{category}") {
             GameScreen()
         }
         composable(route = Screen.StartScreen.route) {
