@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
@@ -28,7 +27,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun startGame(category: String) {
-        val category: Categories = category!!.let {
+        val category: Categories = category.let {
             Categories.valueOf(it)
         }
         _state.update {
@@ -42,42 +41,15 @@ class GameViewModel @Inject constructor(
         drawGame(category)
     }
 
-    private fun getRandomImageIndex(category: Categories, images: GameImages): Int {
-        return when (category){
-            Categories.Instruments -> Random.nextInt(images.instruments.size)
-            Categories.Animals -> Random.nextInt(images.animals.size)
-            Categories.Vehicles -> Random.nextInt(images.vehicles.size)
-        }
-    }
+
     private fun drawGame(category: Categories) {
-        val images = GameImages()
-        val sounds = GameSounds()
-        val firstImageIndex = getRandomImageIndex(category, images)
-        var secondImageIndex = getRandomImageIndex(category, images)
-        while (firstImageIndex == secondImageIndex)
-            secondImageIndex = getRandomImageIndex(category, images)
-        val soundIndex = listOf(firstImageIndex, secondImageIndex).random()
+        val gameItems = GameItem.getRandomItems(category)
 
         _state.update {
             it.copy(
-                firstImage = when (category){
-                    Categories.Instruments -> images.instruments[firstImageIndex]
-                    Categories.Animals -> images.animals[firstImageIndex]
-                    Categories.Vehicles -> images.vehicles[firstImageIndex]
-                },
-                secondImage = when (category){
-                    Categories.Instruments -> images.instruments[secondImageIndex]
-                    Categories.Animals -> images.animals[secondImageIndex]
-                    Categories.Vehicles -> images.vehicles[secondImageIndex]
-                },
-                sound = when (category){
-                    Categories.Instruments -> sounds.instruments[soundIndex]
-                    Categories.Animals -> sounds.animals[soundIndex]
-                    Categories.Vehicles -> sounds.vehicles[soundIndex]
-                },
-                firstImageIndex = firstImageIndex,
-                secondImageIndex = secondImageIndex,
-                soundIndex = soundIndex,
+                firstImage = gameItems[0],
+                secondImage = gameItems[1],
+                sound = gameItems[2],
                 isLoading = false,
                 isPlayingSound = true
             )
@@ -86,7 +58,7 @@ class GameViewModel @Inject constructor(
 
     fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnImageClick -> onImageClick(intent.selectedImage)
+            is GameIntent.OnImageClick -> onImageClick(intent.selectedImage!!)
             is GameIntent.OnBackClick -> onBackClick()
             is GameIntent.OnTimeout -> onTimeout()
         }
@@ -109,11 +81,11 @@ class GameViewModel @Inject constructor(
                 isPlayingSound = false
             )
         }
-        Navigator.sendEvent(NavEvent.NavigateTo(Screen.StartScreen.route))
+        Navigator.sendEvent(NavEvent.NavigateBack)
     }
 
-    private fun onImageClick(selectedImage: Int) {
-        if (selectedImage == _state.value.soundIndex) {
+    private fun onImageClick(selectedImage: GameItem) {
+        if (selectedImage == _state.value.sound) {
             _state.update {
                 it.copy(
                     isPlayingSound = false,
@@ -139,7 +111,7 @@ class GameViewModel @Inject constructor(
     private fun nextGame() {
         viewModelScope.launch {
             delay(1000L)
-            drawGame(state.value.category)
+            drawGame(state.value.category!!)
             _state.update {
                 it.copy(
                     isClickable = true,

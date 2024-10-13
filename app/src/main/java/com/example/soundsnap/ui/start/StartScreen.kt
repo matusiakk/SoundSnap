@@ -86,9 +86,9 @@ private fun StartScreen(
                             .border(width = 2.dp, color = Color.Black, shape = CircleShape)
                     ) {
                         val categoryImage = when (category) {
-                            Categories.Instruments -> R.drawable.instruments
-                            Categories.Animals -> R.drawable.animals
-                            Categories.Vehicles -> R.drawable.vehicles
+                            Categories.INSTRUMENTS -> R.drawable.instruments
+                            Categories.ANIMALS-> R.drawable.animals
+                            Categories.VEHICLES -> R.drawable.vehicles
                         }
                         Image(
                             painter = painterResource(categoryImage),

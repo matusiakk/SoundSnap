@@ -1,7 +1,7 @@
 package com.example.soundsnap.ui.game
 
-enum class Categories{
-    Instruments,
-    Animals,
-    Vehicles
+enum class Categories {
+    INSTRUMENTS,
+    ANIMALS,
+    VEHICLES
 }

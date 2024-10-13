@@ -64,7 +64,7 @@ private fun GameScreen(
         val fredokaFontFamily = FontFamily(Font(R.font.fredoka))
 
         val mediaPlayer =
-            remember(sound) { MediaPlayer.create(context, sound) }
+            remember(sound) { MediaPlayer.create(context, sound!!.sound) }
 
         var timeLeft by remember {
             mutableIntStateOf(60)
@@ -84,7 +84,8 @@ private fun GameScreen(
             Image(
                 painter = painterResource(R.drawable.backbround3),
                 contentDescription = "background",
-                modifier = Modifier.alpha(0.8f))
+                modifier = Modifier.alpha(0.8f)
+            )
             Column {
                 Row(
                     modifier = Modifier
@@ -151,7 +152,7 @@ private fun GameScreen(
                                     onClick = {
                                         onIntent(
                                             GameIntent.OnImageClick(
-                                                firstImageIndex
+                                                firstImage
                                             )
                                         )
                                     },
@@ -159,7 +160,7 @@ private fun GameScreen(
                                 )
                         ) {
                             Image(
-                                painter = painterResource(firstImage),
+                                painter = painterResource(firstImage!!.image),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
@@ -173,15 +174,15 @@ private fun GameScreen(
                                     onClick = {
                                         onIntent(
                                             GameIntent.OnImageClick(
-                                                secondImageIndex
-                                             )
+                                                secondImage
+                                            )
                                         )
                                     },
                                     enabled = isClickable
                                 )
                         ) {
                             Image(
-                                painter = painterResource(secondImage),
+                                painter = painterResource(secondImage!!.image),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
