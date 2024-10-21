@@ -35,13 +35,13 @@ enum class GameItem(val image: Int, val sound: Int, val category: Categories) {
     TRAIN(R.drawable.train, R.raw.train, Categories.VEHICLES);
 
     companion object {
-        fun getRandomItems(category: Categories): List<GameItem> {
-            val firstItem = values().filter { it.category == category }.random()
-            var secondItem = values().filter { it.category == category }.random()
+        fun getRandomItems(category: Categories): Pair<Int, Int> {
+            val firstItem = values().filter { it.category == category }.random().ordinal
+            var secondItem = values().filter { it.category == category }.random().ordinal
             while (firstItem == secondItem)
-                secondItem = values().filter { it.category == category }.random()
-            val soundItem = listOf(firstItem, secondItem).random()
-            return listOf(firstItem, secondItem, soundItem)
+                secondItem = values().filter { it.category == category }.random().ordinal
+
+            return Pair(firstItem, secondItem)
         }
     }
 }

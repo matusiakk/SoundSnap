@@ -47,9 +47,9 @@ class GameViewModel @Inject constructor(
 
         _state.update {
             it.copy(
-                firstImage = gameItems[0],
-                secondImage = gameItems[1],
-                sound = gameItems[2],
+                firstImage = gameItems.first,
+                secondImage = gameItems.second,
+                sound = listOf(gameItems.first, gameItems.second).random(),
                 isLoading = false,
                 isPlayingSound = true
             )
@@ -58,7 +58,7 @@ class GameViewModel @Inject constructor(
 
     fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnImageClick -> onImageClick(intent.selectedImage!!)
+            is GameIntent.OnImageClick -> onImageClick(intent.selectedImage)
             is GameIntent.OnBackClick -> onBackClick()
             is GameIntent.OnTimeout -> onTimeout()
         }
@@ -84,7 +84,7 @@ class GameViewModel @Inject constructor(
         Navigator.sendEvent(NavEvent.NavigateBack)
     }
 
-    private fun onImageClick(selectedImage: GameItem) {
+    private fun onImageClick(selectedImage: Int) {
         if (selectedImage == _state.value.sound) {
             _state.update {
                 it.copy(

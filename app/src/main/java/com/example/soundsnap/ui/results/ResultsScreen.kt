@@ -1,5 +1,6 @@
 package com.example.soundsnap.ui.results
 
+import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -47,6 +49,7 @@ private fun ResultsScreen(
     onIntent: (ResultsIntent) -> Unit
 ) {
     val fredokaFontFamily = FontFamily(Font(R.font.fredoka))
+    val context = LocalContext.current
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -93,7 +96,7 @@ private fun ResultsScreen(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = { (context as Activity).finishAffinity() },
                     modifier = Modifier.padding(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Red,

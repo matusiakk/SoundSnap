@@ -4,4 +4,10 @@
     <string name="descriptions">Kategorie</string>
     <string name="start">Start</string>
     <string name="end">Koniec</string>
+    <string name="about">O aplikacji</string>
+    <string name="close">Zamknij</string>
+    <string name="about_content">SoundSnap to gra dla dzieci, która rozwija umiejętność
+        rozpoznawania dźwięków i łączenia ich z odpowiednimi obrazami.\n\n
+    Grafiki: Wszystkie obrazy zostały wygenerowane przy użyciu narzędzia Copilot.\n\n
+    Dźwięki: Zostały pobrane z Pixabay.</string>
 </resources>

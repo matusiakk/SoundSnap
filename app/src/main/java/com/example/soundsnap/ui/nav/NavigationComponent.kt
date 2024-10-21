@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.soundsnap.ui.about.AboutScreen
 import com.example.soundsnap.ui.game.GameScreen
 import com.example.soundsnap.ui.results.ResultsScreen
 import com.example.soundsnap.ui.start.StartScreen
@@ -31,8 +32,11 @@ fun NavigationComponent(navController: NavHostController) {
         composable(route = Screen.StartScreen.route) {
             StartScreen()
         }
-        composable(route = Screen.ResultsScreen.route + "/{score}"){
+        composable(route = Screen.ResultsScreen.route + "/{score}") {
             ResultsScreen()
+        }
+        composable(route = Screen.AboutScreen.route) {
+            AboutScreen()
         }
     }
 

@@ -64,7 +64,7 @@ private fun GameScreen(
         val fredokaFontFamily = FontFamily(Font(R.font.fredoka))
 
         val mediaPlayer =
-            remember(sound) { MediaPlayer.create(context, sound!!.sound) }
+            remember(sound) { MediaPlayer.create(context, GameItem.values()[sound].sound) }
 
         var timeLeft by remember {
             mutableIntStateOf(60)
@@ -160,7 +160,7 @@ private fun GameScreen(
                                 )
                         ) {
                             Image(
-                                painter = painterResource(firstImage!!.image),
+                                painter = painterResource(GameItem.values()[firstImage].image),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
@@ -182,7 +182,7 @@ private fun GameScreen(
                                 )
                         ) {
                             Image(
-                                painter = painterResource(secondImage!!.image),
+                                painter = painterResource(GameItem.values()[secondImage].image),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))

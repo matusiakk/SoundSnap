@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
-import kotlin.system.exitProcess
 
 @HiltViewModel
 class ResultsViewModel @Inject constructor(
@@ -36,7 +35,6 @@ class ResultsViewModel @Inject constructor(
     }
 
     private fun onEndClick() {
-        exitProcess(0)
     }
 
     private fun onAgainClick() {
