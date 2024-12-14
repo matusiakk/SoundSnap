@@ -16,10 +16,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
+    initialState: GameState,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(GameState())
+    private val _state = MutableStateFlow(initialState)
     val state: StateFlow<GameState> = _state
 
     init {
@@ -49,7 +50,7 @@ class GameViewModel @Inject constructor(
             it.copy(
                 firstImage = gameItems.first,
                 secondImage = gameItems.second,
-                sound = listOf(gameItems.first, gameItems.second).random(),
+                sound = gameItems.third,
                 isLoading = false,
                 isPlayingSound = true
             )
@@ -75,12 +76,6 @@ class GameViewModel @Inject constructor(
     }
 
     private fun onBackClick() {
-        _state.update {
-            it.copy(
-                score = 0,
-                isPlayingSound = false
-            )
-        }
         Navigator.sendEvent(NavEvent.NavigateBack)
     }
 
