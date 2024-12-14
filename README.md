@@ -7,4 +7,4 @@ SoundSnap is a mobile game for children. During the game, sounds are played. The
 <br>MVI architecture
 <br>
 <br>
-![SoundSnap_screens](https://github.com/user-attachments/assets/a0268ff7-f4ea-49f4-927e-b33030c957b1)
+![SoundSnap_screens](https://github.com/matusiakk/SoundSnap/blob/master/SoundSnap_screens.png)
